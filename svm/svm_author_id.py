@@ -19,21 +19,31 @@ from email_preprocess import preprocess
 ### labels_train and labels_test are the corresponding item labels
 features_train, features_test, labels_train, labels_test = preprocess()
 
-
-#########################################################
-### your code goes here ###
-
-
-#########################################################
-
-#########################################################
-'''
-You'll be Provided similar code in the Quiz
-But the Code provided in Quiz has an Indexing issue
-The Code Below solves that issue, So use this one
-'''
-
+#For speeding up the classifier, by using smaller dataset
 # features_train = features_train[:int(len(features_train)/100)]
 # labels_train = labels_train[:int(len(labels_train)/100)]
 
-#########################################################
+from sklearn import svm
+svm_clf = svm.SVC(kernel='linear')
+t0= time()
+print('SVM Training begins...')
+#Training the linear SVM classifier
+svm_clf.fit(features_train, labels_train)
+t_train = time() - t0
+print('SVM Training ends...')
+print("Training Time:", round(t_train, 3), "s")
+
+t0= time()
+print('SVM Testing begins...')
+predicted_labels = svm_clf.predict(features_test)
+t_test = time() - t0
+print('SVM Testing ends...')
+print("Testing Time:", round(t_test, 3), "s")
+
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import hamming_loss
+accuracy = accuracy_score(y_true=labels_test, y_pred= predicted_labels)
+hammingLoss = hamming_loss(y_true=labels_test, y_pred= predicted_labels)
+print("Accuracy of Linear SVM CLassifier is: ", accuracy)
+print("Hamming Loss(Accuracy of Incorrect classification) of Linear SVM CLassifier is: ", hammingLoss)
+
