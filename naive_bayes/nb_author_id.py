@@ -23,8 +23,25 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 
 ##############################################################
-# Enter Your Code Here
+from sklearn.naive_bayes import GaussianNB
+t0= time()
+naive_bayes_clf = GaussianNB()
+#Fitting the gaussian naive bayes classifier
+naive_bayes_clf.fit(features_train, labels_train)
+t_train = time() - t0
+print("Training Time:", round(t_train, 3), "s")
 
+t0= time()
+predicted_labels = naive_bayes_clf.predict(features_test)
+t_test = time() - t0
+print("Testing Time:", round(t_test, 3), "s")
+
+from sklearn.metrics import accuracy_score
+from sklearn.metrics import hamming_loss
+accuracy = accuracy_score(y_true=labels_test, y_pred= predicted_labels)
+hammingLoss = hamming_loss(y_true=labels_test, y_pred= predicted_labels)
+print("Accuracy of Naive Bayes CLassifier is: ", accuracy)
+print("Hamming Loss(Accuracy of Incorrect classification) of Naive Bayes CLassifier is: ", hammingLoss)
 
 
 ##############################################################
