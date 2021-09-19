@@ -13,9 +13,11 @@ from time import time
 from sklearn import svm
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import hamming_loss
+sys.path.append("../tools/")
+
 from email_preprocess import preprocess
 
-sys.path.append("../tools/")
+
 
 # features_train and features_test are the features for the training
 # and testing datasets, respectively
